@@ -1,6 +1,6 @@
 """Print what assistive technology, and an agent using
 Playwright MCP, gets from the signup area of broken and
-fixed. For talk slide 24."""
+fixed."""
 
 import sys
 from pathlib import Path

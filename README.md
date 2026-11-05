@@ -31,7 +31,7 @@ After `make setup`, nothing needs the network.
 | 2. What axe can't see | `make demo2-broken`, `demo2-fixed` | A visible, slowed browser with pressed keys on screen. The broken dialog has correct ARIA and fails at step 2 (focus never moves in). The fixed dialog keeps focus and returns it. |
 | 3. Names that mean nothing | `make demo3-axe`, `demo3-names`, `demo3-after` | axe passes on `hollow`. The name check lists "icon", "Button", "button" and "image". It passes on `fixed`. |
 
-Slide assets: `make snapshot` (accessibility tree, broken next to fixed) and `make incomplete` (what axe says about text on a gradient).
+Extras: `make snapshot` (accessibility tree, broken next to fixed) and `make incomplete` (what axe says about text on a gradient).
 
 ## Four ideas to copy
 
@@ -54,9 +54,9 @@ tests/conventional/  CSS selectors, no axe
 tests/axe_only/      axe alone, no framework helpers
 tests/a11y/          demo tests, axe after every test
 tests/meta/          tests of the framework itself
-scripts/          check, snapshot, incomplete, phase0 probe
-recording/        key overlay used with --show-keys
-RECORDING.md      shot list for the demo videos
+scripts/          check, snapshot, incomplete
+recording/        on-screen key display used with --show-keys
+FINDINGS.md       what axe and Chromium actually do
 ```
 
 ## Versions
@@ -75,7 +75,7 @@ Python 3.12, Playwright for Python 1.64.0 (Chromium 156), pytest 9.1.1, pytest-p
 
 - **Tests time out at the first click on macOS:** the headless shell's GPU process can crash. `pytest.ini` already uses full Chromium (`--browser-channel chromium`); keep that setting.
 - **Browser not found:** run `make setup` again. Browsers are installed into `.pw-browsers/` in this folder.
-- **Port or permission errors in a sandboxed tool:** the tests start a local web server and launch Chromium. Run them in a normal terminal.
+- **Port or permission errors:** the tests start a local web server and launch Chromium. Run them in a normal terminal, not inside a restricted environment.
 - **Check the whole repo:** `make check` prints expected vs actual for every target. A failure only counts as expected if it shows an Expected/Found/Fix message.
 
 ## Licence

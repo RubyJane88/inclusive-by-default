@@ -26,7 +26,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--show-keys",
         action="store_true",
-        help="show pressed keys on screen, for recording",
+        help="show pressed keys on screen, for demos",
     )
 
 
@@ -59,7 +59,7 @@ def base_url(app_server, pytestconfig):
 
 @pytest.fixture(autouse=True)
 def _short_timeouts(request):
-    # A test must never hang on video.
+    # Fail fast rather than hang.
     expect.set_options(timeout=TIMEOUT_MS)
     if "page" in request.fixturenames:
         page = request.getfixturevalue("page")

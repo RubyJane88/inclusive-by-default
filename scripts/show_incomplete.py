@@ -1,5 +1,5 @@
 """Print what axe says about text over a gradient.
-It is neither a pass nor a violation. For talk slide 21.
+It is neither a pass nor a violation.
 Runs with the dialog closed: an open modal makes the page
 behind inert, and axe then skips it."""
 

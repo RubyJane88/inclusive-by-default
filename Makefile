@@ -15,7 +15,7 @@ setup:
 	.venv/bin/playwright install chromium
 
 # Open http://localhost:8000/broken/ (or fixed, hollow)
-# in Safari for VoiceOver recording.
+# in a browser, for example to try a screen reader.
 serve:
 	$(PY) -m http.server 8000 --bind 127.0.0.1 -d app
 
@@ -46,7 +46,7 @@ demo3-names:
 demo3-after:
 	$(PYTEST) tests/a11y/test_names.py --variant fixed
 
-# Slide assets
+# Extras
 snapshot:
 	$(PY) scripts/show_snapshot.py
 

@@ -1,5 +1,5 @@
-// Recording aid, injected only with --show-keys.
-// Shows the last key pressed so video viewers can follow
+// Demo aid, injected only with --show-keys.
+// Shows the last key pressed so people watching can follow
 // keyboard-only interaction. Hidden from assistive
 // technology and excluded from axe.
 (() => {

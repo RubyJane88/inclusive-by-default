@@ -8,7 +8,7 @@ AXE_JS = Path(__file__).parent / "vendor" / "axe.min.js"
 WCAG_TAGS = [
     "wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa",
 ]
-# Recording aids are not part of the app under test.
+# The --show-keys display is not part of the app.
 EXCLUDE = [["#key-overlay"]]
 
 
