@@ -1,0 +1,149 @@
+/* Shared layout. Variants differ in semantics, not looks. */
+:root {
+  --text: #1f2328;
+  --muted: #4a4f57;
+  --accent: #1a4fd6;
+  --bg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 18px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.brand { font-weight: 700; }
+
+main { max-width: 680px; margin: 0 auto; padding: 24px; }
+
+.hero { display: block; width: 100%; height: auto; }
+
+.lead { color: var(--muted); }
+
+/* Text over a gradient. axe cannot compute this. */
+.promo {
+  padding: 12px 16px;
+  color: #ffffff;
+  background-image: linear-gradient(90deg, #1a4fd6, #7a2fd6);
+  border-radius: 6px;
+}
+
+.field { margin: 16px 0; }
+
+.field-label { display: block; font-weight: 600; }
+
+input {
+  width: 100%;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid #6e7781;
+  border-radius: 6px;
+}
+
+.error { color: #b3261e; min-height: 1.5em; }
+
+.btn,
+button.primary,
+button.secondary {
+  display: inline-block;
+  padding: 10px 18px;
+  font: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn,
+button.primary {
+  color: #ffffff;
+  background: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+button.secondary {
+  color: var(--accent);
+  background: #ffffff;
+  border: 2px solid var(--accent);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.icon-btn svg { width: 24px; height: 24px; }
+
+.danger-zone {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #d0d7de;
+}
+
+/* Same strong focus style in every variant, so video
+   viewers can always see where focus is. */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Dialog box, used by the div dialog and native dialog. */
+.dialog {
+  width: min(440px, 90vw);
+  padding: 24px;
+  color: var(--text);
+  background: #ffffff;
+  border: 1px solid #6e7781;
+  border-radius: 8px;
+}
+
+.dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialog-actions { display: flex; gap: 12px; margin-top: 16px; }
+
+dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+
+/* The broken variant fakes a modal with a positioned div. */
+.fake-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.fake-modal.open { display: flex; }
+
+.close-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.status { min-height: 1.5em; font-weight: 600; }

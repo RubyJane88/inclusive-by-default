@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your account - Northwind</title>
+  <link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+  <header>
+    <span class="brand">Northwind</span>
+    <button type="button" class="icon-btn" id="settings"
+            aria-label="Settings">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <h1>Create your account</h1>
+    <img class="hero" src="../shared/hero.svg"
+         alt="Northwind dashboard showing a project summary">
+    <p class="lead">Plan projects, share files and track progress
+      with your team.</p>
+    <p class="promo">Spring offer: 20% off annual plans</p>
+
+    <form id="signup" novalidate>
+      <div class="field">
+        <label class="field-label" for="email">Email</label>
+        <input type="email" id="email" name="email"
+               autocomplete="email" aria-describedby="email-error">
+        <div class="error" id="email-error"></div>
+      </div>
+      <div class="field">
+        <label class="field-label" for="name">Name</label>
+        <input type="text" id="name" name="name"
+               autocomplete="name">
+      </div>
+      <button type="submit" class="primary" id="save">
+        Create account</button>
+      <p class="status" id="status" role="status"></p>
+    </form>
+
+    <section class="danger-zone" aria-labelledby="danger-title">
+      <h2 id="danger-title">Account settings</h2>
+      <button type="button" class="secondary" id="delete">
+        Delete account</button>
+    </section>
+  </main>
+
+  <dialog id="confirm" class="dialog" aria-labelledby="confirm-title">
+    <div class="dialog-head">
+      <h2 id="confirm-title">Delete your account?</h2>
+      <button type="button" class="icon-btn" id="close"
+              aria-label="Close dialog">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+    <p>This removes your projects and files. It cannot be undone.</p>
+    <div class="dialog-actions">
+      <button type="button" class="secondary" id="cancel">Cancel</button>
+      <button type="button" class="primary" id="confirm-delete">
+        Delete</button>
+    </div>
+  </dialog>
+
+  <script>
+    const form = document.getElementById("signup");
+    const email = document.getElementById("email");
+    const emailError = document.getElementById("email-error");
+    const status = document.getElementById("status");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!email.value.includes("@")) {
+        emailError.textContent = "Enter an email address, like name@example.com";
+        email.setAttribute("aria-invalid", "true");
+        email.focus();
+        return;
+      }
+      emailError.textContent = "";
+      email.removeAttribute("aria-invalid");
+      status.textContent = "Account created";
+    });
+
+    const dialog = document.getElementById("confirm");
+    document.getElementById("delete")
+      .addEventListener("click", () => dialog.showModal());
+    for (const id of ["close", "cancel", "confirm-delete"]) {
+      document.getElementById(id)
+        .addEventListener("click", () => dialog.close());
+    }
+  </script>
+</body>
+</html>

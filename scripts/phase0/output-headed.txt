@@ -1,0 +1,41 @@
+Playwright Chromium 156.0.8078.4 headed
+
+=== Item 4: focus through the dialog
+
+--- fixed: after Enter on trigger
+    {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n      \n        ', 'inDialog': False, 'hasFocus': False}
+    Shift+Tab  {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Escape     {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    dialog still open: False
+--- fixed: close via Cancel button, then active:
+    {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+
+--- broken: after Enter on trigger
+    {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n    \n      \n   ', 'inDialog': False, 'hasFocus': False}
+    Tab        {'tag': 'button', 'id': 'settings', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Tab        {'tag': 'input', 'id': 'email', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Tab        {'tag': 'input', 'id': 'name', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'input', 'id': 'email', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'settings', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'input', 'id': 'name', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Escape     {'tag': 'input', 'id': 'name', 'text': '', 'inDialog': False, 'hasFocus': True}
+    dialog still open: True
+--- broken: close via Cancel button, then active:
+    {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n    \n      \n   ', 'inDialog': False, 'hasFocus': True}

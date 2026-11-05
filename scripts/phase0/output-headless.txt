@@ -1,0 +1,112 @@
+Playwright Chromium 156.0.8078.4 headless
+
+=== Items 1, 2, 3, 5: axe per variant
+
+--- broken, dialog closed  (axe 4.14.0)
+  violations: 6
+    button-name [critical] nodes=1
+      #settings: Fix any of the following: |   Element does not have inner text that is visible to screen readers |   aria-label attribute does not exist or is empty |   aria-la
+    color-contrast [serious] nodes=6
+      .brand: Fix any of the following: |   Element has insufficient color contrast of 2.81 (foreground color: #9a9a9a, background color: #ffffff, font size: 13.5pt (18px), f
+      h1: Fix any of the following: |   Element has insufficient color contrast of 2.81 (foreground color: #9a9a9a, background color: #ffffff, font size: 27.0pt (36px), f
+      .lead: Fix any of the following: |   Element has insufficient color contrast of 2.43 (foreground color: #a6a6a6, background color: #ffffff, font size: 13.5pt (18px), f
+      .field:nth-child(1) > .field-label: Fix any of the following: |   Element has insufficient color contrast of 2.81 (foreground color: #9a9a9a, background color: #ffffff, font size: 13.5pt (18px), f
+    document-title [serious] nodes=1
+      html: Fix any of the following: |   Document does not have a non-empty <title> element
+    html-has-lang [serious] nodes=1
+      html: Fix any of the following: |   The <html> element does not have a lang attribute
+    image-alt [critical] nodes=1
+      img: Fix any of the following: |   Element does not have an alt attribute |   aria-label attribute does not exist or is empty |   aria-labelledby attribute does not 
+    label [critical] nodes=2
+      #email: Fix any of the following: |   Element does not have an implicit (wrapped) <label> |   Element does not have an explicit <label> |   aria-label attribute does no
+      #name: Fix any of the following: |   Element does not have an implicit (wrapped) <label> |   Element does not have an explicit <label> |   aria-label attribute does no
+  incomplete: 1
+    color-contrast [serious] nodes=1
+      .promo: Element's background color could not be determined due to a background gradient
+
+--- broken, dialog open  (axe 4.14.0)
+  violations: 6
+    button-name [critical] nodes=1
+      #settings: Fix any of the following: |   Element does not have inner text that is visible to screen readers |   aria-label attribute does not exist or is empty |   aria-la
+    color-contrast [serious] nodes=8
+      .brand: Fix any of the following: |   Element has insufficient color contrast of 2.81 (foreground color: #9a9a9a, background color: #ffffff, font size: 13.5pt (18px), f
+      h1: Fix any of the following: |   Element has insufficient color contrast of 2.81 (foreground color: #9a9a9a, background color: #ffffff, font size: 27.0pt (36px), f
+      .lead: Fix any of the following: |   Element has insufficient color contrast of 2.43 (foreground color: #a6a6a6, background color: #ffffff, font size: 13.5pt (18px), f
+      .field:nth-child(1) > .field-label: Fix any of the following: |   Element has insufficient color contrast of 2.81 (foreground color: #9a9a9a, background color: #ffffff, font size: 13.5pt (18px), f
+    document-title [serious] nodes=1
+      html: Fix any of the following: |   Document does not have a non-empty <title> element
+    html-has-lang [serious] nodes=1
+      html: Fix any of the following: |   The <html> element does not have a lang attribute
+    image-alt [critical] nodes=1
+      img: Fix any of the following: |   Element does not have an alt attribute |   aria-label attribute does not exist or is empty |   aria-labelledby attribute does not 
+    label [critical] nodes=2
+      #email: Fix any of the following: |   Element does not have an implicit (wrapped) <label> |   Element does not have an explicit <label> |   aria-label attribute does no
+      #name: Fix any of the following: |   Element does not have an implicit (wrapped) <label> |   Element does not have an explicit <label> |   aria-label attribute does no
+  incomplete: 1
+    color-contrast [serious] nodes=1
+      .promo: Element's background color could not be determined due to a background gradient
+
+--- fixed, dialog closed  (axe 4.14.0)
+  violations: 0
+  incomplete: 1
+    color-contrast [serious] nodes=1
+      .promo: Element's background color could not be determined due to a background gradient
+
+--- fixed, dialog open  (axe 4.14.0)
+  violations: 0
+  incomplete: 0
+
+--- hollow, dialog closed  (axe 4.14.0)
+  violations: 0
+  incomplete: 1
+    color-contrast [serious] nodes=1
+      .promo: Element's background color could not be determined due to a background gradient
+
+--- hollow, dialog open  (axe 4.14.0)
+  violations: 0
+  incomplete: 0
+
+=== Extra: does axe accept placeholder as a label?
+  violations: []
+  passes: ['label']
+  get_by_role('textbox', name='Email') count: 1
+
+=== Item 4: focus through the dialog
+
+--- fixed: after Enter on trigger
+    {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n      \n        ', 'inDialog': False, 'hasFocus': False}
+    Tab        {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n      \n        ', 'inDialog': False, 'hasFocus': False}
+    Shift+Tab  {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'close', 'text': 'Close dialog', 'inDialog': True, 'hasFocus': True}
+    Escape     {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    dialog still open: False
+--- fixed: close via Cancel button, then active:
+    {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+
+--- broken: after Enter on trigger
+    {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Tab        {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n    \n      \n   ', 'inDialog': False, 'hasFocus': False}
+    Tab        {'tag': 'button', 'id': 'settings', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Tab        {'tag': 'input', 'id': 'email', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Tab        {'tag': 'input', 'id': 'name', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'input', 'id': 'email', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'settings', 'text': '', 'inDialog': False, 'hasFocus': True}
+    Shift+Tab  {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n    \n      \n   ', 'inDialog': False, 'hasFocus': False}
+    Shift+Tab  {'tag': 'button', 'id': 'confirm-delete', 'text': 'Delete', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'cancel', 'text': 'Cancel', 'inDialog': True, 'hasFocus': True}
+    Shift+Tab  {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    Escape     {'tag': 'button', 'id': 'delete', 'text': 'Delete account', 'inDialog': False, 'hasFocus': True}
+    dialog still open: True
+--- broken: close via Cancel button, then active:
+    {'tag': 'body', 'id': None, 'text': 'Northwind\n    \n    \n      \n   ', 'inDialog': False, 'hasFocus': True}

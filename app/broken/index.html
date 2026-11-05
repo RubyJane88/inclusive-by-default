@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../shared/style.css">
+  <style>
+    /* Defect: gray body text below 4.5:1 on white. */
+    :root { --text: #9a9a9a; --muted: #a6a6a6; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="brand">Northwind</span>
+    <!-- Defect: icon-only button with no name. -->
+    <button type="button" class="icon-btn" id="settings">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <h1>Create your account</h1>
+    <!-- Defect: image with no alt. -->
+    <img class="hero" src="../shared/hero.svg">
+    <p class="lead">Plan projects, share files and track progress
+      with your team.</p>
+    <p class="promo">Spring offer: 20% off annual plans</p>
+
+    <form id="signup" novalidate>
+      <!-- Defect: visible text is not associated with the input. -->
+      <div class="field">
+        <div class="field-label">Email</div>
+        <input type="email" id="email" name="email">
+        <!-- Defect: error text not linked to the input. -->
+        <div class="error" id="email-error"></div>
+      </div>
+      <div class="field">
+        <div class="field-label">Name</div>
+        <input type="text" id="name" name="name">
+      </div>
+      <!-- Defect: div with a click handler, not a button. -->
+      <div class="btn" id="save">Create account</div>
+      <p class="status" id="status"></p>
+    </form>
+
+    <section class="danger-zone">
+      <h2>Account settings</h2>
+      <button type="button" class="secondary" id="delete">
+        Delete account</button>
+    </section>
+  </main>
+
+  <!-- Defect: correct ARIA, broken behavior. Focus does not
+       move in, Tab leaves, Escape does nothing, focus is lost
+       on close. Close X is a span. -->
+  <div class="fake-modal" id="confirm-layer">
+    <div class="dialog" id="confirm" role="dialog" aria-modal="true"
+         aria-labelledby="confirm-title">
+      <div class="dialog-head">
+        <h2 id="confirm-title">Delete your account?</h2>
+        <span class="close-x" id="close">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none"
+               stroke="currentColor" stroke-width="2">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </span>
+      </div>
+      <p>This removes your projects and files. It cannot be undone.</p>
+      <div class="dialog-actions">
+        <button type="button" class="secondary" id="cancel">Cancel</button>
+        <button type="button" class="primary" id="confirm-delete">
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const email = document.getElementById("email");
+    const emailError = document.getElementById("email-error");
+    const status = document.getElementById("status");
+    document.getElementById("save").addEventListener("click", () => {
+      if (!email.value.includes("@")) {
+        emailError.textContent = "Invalid email";
+        return;
+      }
+      emailError.textContent = "";
+      status.textContent = "Account created";
+    });
+
+    const layer = document.getElementById("confirm-layer");
+    document.getElementById("delete")
+      .addEventListener("click", () => layer.classList.add("open"));
+    for (const id of ["close", "cancel", "confirm-delete"]) {
+      document.getElementById(id).addEventListener("click", () => {
+        layer.classList.remove("open");
+      });
+    }
+  </script>
+</body>
+</html>

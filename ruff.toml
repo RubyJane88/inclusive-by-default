@@ -1,0 +1,3 @@
+# Framework code is shown on slides at 28pt.
+line-length = 60
+exclude = ["scripts/phase0", ".pw-browsers"]
