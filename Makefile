@@ -4,6 +4,9 @@ export PLAYWRIGHT_BROWSERS_PATH := $(CURDIR)/.pw-browsers
 PY := .venv/bin/python
 PYTEST := .venv/bin/pytest
 HEADED := --headed --slowmo 400 --show-keys
+# Add SHOW=1 to any demo to watch it in a visible, slowed
+# browser, e.g. make demo1-before SHOW=1
+SHOWN := $(if $(SHOW),$(HEADED),)
 
 .PHONY: setup serve demo1-before demo1-catch demo1-after \
 	demo2-broken demo2-fixed demo3-axe demo3-names \
@@ -21,13 +24,13 @@ serve:
 
 # Demo 1: green tests, broken page
 demo1-before:
-	$(PYTEST) tests/conventional --variant broken
+	$(PYTEST) tests/conventional --variant broken $(SHOWN)
 
 demo1-catch:
-	-$(PYTEST) tests/a11y/test_signup.py --variant broken
+	-$(PYTEST) tests/a11y/test_signup.py --variant broken $(SHOWN)
 
 demo1-after:
-	$(PYTEST) tests/a11y/test_signup.py --variant fixed
+	$(PYTEST) tests/a11y/test_signup.py --variant fixed $(SHOWN)
 
 # Demo 2: what axe can't see (headed, slowed, keys shown)
 demo2-broken:
@@ -38,13 +41,13 @@ demo2-fixed:
 
 # Demo 3: names that mean nothing
 demo3-axe:
-	$(PYTEST) tests/axe_only --variant hollow
+	$(PYTEST) tests/axe_only --variant hollow $(SHOWN)
 
 demo3-names:
-	-$(PYTEST) tests/a11y/test_names.py --variant hollow
+	-$(PYTEST) tests/a11y/test_names.py --variant hollow $(SHOWN)
 
 demo3-after:
-	$(PYTEST) tests/a11y/test_names.py --variant fixed
+	$(PYTEST) tests/a11y/test_names.py --variant fixed $(SHOWN)
 
 # Extras
 snapshot:
