@@ -29,7 +29,7 @@ After `make setup`, nothing needs the network.
 |---|---|---|
 | 1. Green tests, broken page | `make demo1-before`, `demo1-catch`, `demo1-after` | Conventional tests pass on `broken`. Role-based tests fail with Expected, Found, Fix. They pass on `fixed`. |
 | 2. What axe can't see | `make demo2-broken`, `demo2-fixed` | A visible, slowed browser with pressed keys on screen. The broken dialog has correct ARIA and fails at step 2 (focus never moves in). The fixed dialog keeps focus and returns it. |
-| 3. Names that mean nothing | `make demo3-axe`, `demo3-names`, `demo3-after` | axe passes on `hollow`. The name check lists "icon", "Button", "button" and "image". It passes on `fixed`. |
+| 3. Names that mean nothing | `make demo3-axe`, `demo3-names`, `demo3-after` | axe passes on `hollow`. The name check lists "icon", "Create account button", "button" and "image". It passes on `fixed`. |
 
 Extras: `make snapshot` (accessibility tree, broken next to fixed) and `make incomplete` (what axe says about text on a gradient).
 

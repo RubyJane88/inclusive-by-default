@@ -8,11 +8,15 @@ Checked on 14 October 2026 with axe-core 4.14.0, Chromium 156 and Playwright for
 
 | Page | axe result | What is actually wrong |
 |---|---|---|
-| `hollow` | No violations | Buttons named "icon" and "button", an image with alt text "image", a submit button labelled "Button" |
+| `hollow` | No violations | Buttons named "icon" and "button", an image with alt text "image", and a submit button whose name is "Create account button", so screen readers say "button" twice |
 | `broken`, dialog open | No violation for the dialog | It has `role="dialog"` and `aria-modal="true"`, but focus never moves in, Tab reaches the page behind, and Escape does nothing |
 | `broken` | No violation for the submit control | It is a `div` with a click handler, not a button |
 
 axe checks that names and roles exist. It cannot judge what a name says or how a component behaves. The name-quality and dialog focus checks in `framework/helpers.py` cover these cases.
+
+## axe does check that visible text is in the name
+
+axe's `label-content-name-mismatch` rule (WCAG 2.5.3, label in name) runs with the WCAG tags above. A button that shows "Create account" but has `aria-label="Button"` is flagged. A name that contains the visible text, such as "Create account button", passes, even though "button" repeats the role.
 
 ## What axe did flag on `broken`
 

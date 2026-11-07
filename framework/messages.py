@@ -96,7 +96,7 @@ def weak_names(role, problems):
     plural = _plural(role, count)
     weak = "a weak name" if count == 1 else "weak names"
     rows = [
-        f'            {_quote(n):<12} {w:<10} {r}'
+        f'            {_quote(n):<24} {w:<10} {r}'
         for n, w, r in problems
     ]
     return expected_found_fix(
