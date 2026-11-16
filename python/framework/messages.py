@@ -53,8 +53,8 @@ FOCUS_STEPS = {
 # How to fix a weak name, by role.
 NAME_FIX = {
     "button": (
-        "name each button by its action, e.g."
-        ' aria-label="Settings"'
+        "name each button by its action alone —"
+        ' "Settings", not "Settings button"'
     ),
     "img": (
         "describe what each image shows, e.g."

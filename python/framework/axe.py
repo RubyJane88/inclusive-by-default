@@ -33,7 +33,7 @@ def violations_report(results):
         "no WCAG A or AA failures that axe can detect",
         f"{len(rows)} rules fail (rule, where, fix):\n"
         + "\n".join(rows),
-        "the change on each line. Rule details: "
+        "fix each rule above. Rule details: "
         f"dequeuniversity.com/rules/axe/{version[:4]}",
     )
 
