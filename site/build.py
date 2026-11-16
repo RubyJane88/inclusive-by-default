@@ -99,6 +99,10 @@ def main():
         ROOT / "python" / "starter" / "conftest.py",
         OUT / "vendor" / "conftest.py",
     )
+    shutil.copy(
+        ROOT / "typescript" / "starter" / "a11y-test.ts",
+        OUT / "vendor" / "a11y-test.ts",
+    )
     print(f"built {OUT.relative_to(ROOT)}/ "
           f"(output captured {outputs['captured']})")
 

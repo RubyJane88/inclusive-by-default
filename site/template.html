@@ -326,7 +326,7 @@ dialog.showModal()</code></pre>
   <!-- ================= TAKE HOME ================= -->
   <section class="panel" id="take-home" aria-labelledby="h-take-home" tabindex="-1">
     <h2 id="h-take-home">Take it home</h2>
-    <p class="lead">You do not need a new tool. You need the tools you already have to run on every test, and to say what to fix. Copy these in order. The examples use Python, pytest and Playwright; the ideas work in any stack.</p>
+    <p class="lead">You do not need a new tool. You need the tools you already have to run on every test, and to say what to fix. Copy these in order. The examples use Python, pytest and Playwright; step 1 also has a TypeScript version. The ideas work in any stack.</p>
 
     <article class="step">
       <h3><span class="sn">1</span> Start in 15 minutes: axe after every test</h3>
@@ -346,6 +346,19 @@ dialog.showModal()</code></pre>
         <figcaption>Opting out <button type="button" data-copy>Copy</button></figcaption>
         <pre tabindex="0"><code>{{starter:1. Start in 15 minutes|2}}</code></pre>
       </figure>
+      <details>
+        <summary>Using Playwright Test with TypeScript? Use this file instead</summary>
+        <ol>
+          <li>Install: <code>npm install --save-dev @axe-core/playwright</code></li>
+          <li>Copy the file below into your tests folder as <code>a11y-test.ts</code>, or <a href="vendor/a11y-test.ts" download="a11y-test.ts">download a11y-test.ts</a>.</li>
+          <li>In your tests, import <code>test</code> and <code>expect</code> from it instead of from <code>@playwright/test</code>.</li>
+        </ol>
+        <figure class="out copyable">
+          <figcaption><code>a11y-test.ts</code> <button type="button" data-copy>Copy</button></figcaption>
+          <pre tabindex="0"><code>{{file:typescript/starter/a11y-test.ts}}</code></pre>
+        </figure>
+        <p class="small">The whole framework is also available in TypeScript, with the same failure messages: <a href="https://github.com/RubyJane88/inclusive-by-default/tree/main/typescript">typescript/ in the repo</a>.</p>
+      </details>
       <p class="small">If it fails on day one with many violations, that is normal. Start with one test file, fix or ticket what it finds, then widen it.</p>
     </article>
 
@@ -421,7 +434,7 @@ dialog.showModal()</code></pre>
       <p>Nothing replaces testing with disabled people.</p>
     </article>
 
-    <p>The full guide, with other test tools and sources: <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/STARTER.md">STARTER.md in the repo</a>. A TypeScript version is in progress.</p>
+    <p>The full guide, with other test tools and sources: <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/STARTER.md">STARTER.md in the repo</a>. The same framework in TypeScript: <a href="https://github.com/RubyJane88/inclusive-by-default/tree/main/typescript">typescript/ in the repo</a>.</p>
   </section>
 </main>
 

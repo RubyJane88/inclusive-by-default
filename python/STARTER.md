@@ -12,7 +12,7 @@ You do not need a new tool. You need the tools you already have to run on every 
 - [6. Other test tools](#6-other-test-tools)
 - [7. Sources](#7-sources)
 
-The examples use Python, pytest and Playwright. The ideas work in any stack.
+The examples use Python, pytest and Playwright. The ideas work in any stack. For Playwright Test in TypeScript, the same starter is [`typescript/starter/a11y-test.ts`](../typescript/starter/a11y-test.ts).
 
 ## 1. Start in 15 minutes
 

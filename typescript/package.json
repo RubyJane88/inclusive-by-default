@@ -1,0 +1,27 @@
+{
+  "name": "inclusive-by-default-typescript",
+  "private": true,
+  "description": "TypeScript port of the Inclusive by Default demo: Playwright Test with accessibility checks built in.",
+  "license": "MIT",
+  "scripts": {
+    "setup": "npm install && playwright install chromium",
+    "demo1-before": "playwright test tests/conventional --project=broken",
+    "demo1-catch": "playwright test tests/a11y/signup.spec.ts --project=broken",
+    "demo1-after": "playwright test tests/a11y/signup.spec.ts --project=fixed",
+    "demo2-broken": "playwright test tests/a11y/dialog.spec.ts --project=broken",
+    "demo2-fixed": "playwright test tests/a11y/dialog.spec.ts --project=fixed",
+    "demo3-axe": "playwright test tests/axe-only --project=hollow",
+    "demo3-names": "playwright test tests/a11y/names.spec.ts --project=hollow",
+    "demo3-after": "playwright test tests/a11y/names.spec.ts --project=fixed",
+    "meta": "playwright test --project=meta",
+    "check": "node scripts/check.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.0",
+    "axe-core": "4.14.0",
+    "playwright-core": "1.64.0",
+    "typescript": "7.0.2"
+  }
+}

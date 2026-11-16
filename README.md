@@ -17,7 +17,7 @@ The app passes automated checks. It is a demo, not a claim of WCAG conformance.
 | Folder | Status |
 |---|---|
 | [`python/`](python/) | Ready. pytest and Playwright for Python. The reference implementation, used in the talk. |
-| [`typescript/`](typescript/) | In progress. The same patterns for Playwright Test. |
+| [`typescript/`](typescript/) | Ready. The same patterns for Playwright Test, with the same failure messages. |
 
 Both use the same three pages in `app/`.
 
@@ -72,7 +72,7 @@ python/           the reference implementation
   tests/a11y/          demo tests, axe after every test
   tests/meta/          tests of the framework itself
   scripts/        check, snapshot, incomplete
-typescript/       port of the same patterns (in progress)
+typescript/       the same patterns for Playwright Test
 site/             the demo website, built from this repo
 FINDINGS.md       what axe and Chromium actually do
 ```
