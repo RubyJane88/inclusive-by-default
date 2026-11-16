@@ -31,10 +31,11 @@
     <p class="promo">Spring offer: 20% off annual plans</p>
 
     <form id="signup" novalidate>
-      <!-- Defect: visible text is not associated with the input. -->
+      <!-- Defect: visible text is not associated with the input.
+           A plain text input, so nothing hints at what it is for. -->
       <div class="field">
         <div class="field-label">Email</div>
-        <input type="email" id="email" name="email">
+        <input type="text" id="email" name="email">
         <!-- Defect: error text not linked to the input. -->
         <div class="error" id="email-error"></div>
       </div>
