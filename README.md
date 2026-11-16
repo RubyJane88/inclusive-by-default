@@ -23,7 +23,7 @@ Both use the same three pages in `app/`.
 
 ## The demo site
 
-The three demos are also a small website: try each page by keyboard, run axe in your browser, read the real test output, and copy the starter code. It is built from this repo by [`site/`](site/) and published with Netlify.
+The three demos are also a small website: try each page by keyboard, run axe in your browser, read the real test output, and copy the starter code. It is at [rubyjane88.github.io/inclusive-by-default](https://rubyjane88.github.io/inclusive-by-default/), built from this repo by [`site/`](site/) and published with GitHub Pages.
 
 ## How to run the demo
 

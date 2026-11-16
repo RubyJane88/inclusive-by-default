@@ -21,14 +21,20 @@ make site           # build ../_site
 make site-serve     # build, then preview at http://localhost:8080
 ```
 
-Commit `outputs.json` after `make site-capture`. Netlify does not run
-the tests; it only runs `python3 site/build.py`.
+Commit `outputs.json` after `make site-capture`. Publishing does not
+run the tests; it only runs `python3 site/build.py`.
 
-## Publishing on Netlify
+## Publishing
 
-`netlify.toml` at the repo root holds the settings. In Netlify, choose
-"Add new site", then "Import an existing project", pick this GitHub
-repo, and deploy. Every merge to `main` republishes the site.
+`.github/workflows/pages.yml` builds the site and publishes it with
+GitHub Pages on every merge to `main`. It runs `python3 site/build.py`
+and publishes `_site`. It does not run the tests.
+
+The site is at https://rubyjane88.github.io/inclusive-by-default/.
+
+`netlify.toml` at the repo root does the same for Netlify. Netlify's
+free plan adds its own badge to every page, including the demo pages,
+which adds keyboard stops to them.
 
 ## What is live and what is recorded
 
