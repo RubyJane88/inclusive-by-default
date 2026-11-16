@@ -54,7 +54,7 @@ Extras: `make snapshot` (accessibility tree, broken next to fixed) and `make inc
 3. **Make failures say the fix.** Every failure reads Expected, Found, Fix (`python/framework/messages.py`). A developer new to accessibility can act on it, and so can an AI assistant.
 4. **Check what scanners miss.** `python/framework/helpers.py` has a name-quality check and a five-step dialog focus check.
 
-Start with idea 2: [`starter/conftest.py`](python/starter/conftest.py) is a single drop-in file of about 60 lines. The whole framework in this repo is 385 lines, not counting blank lines and comments.
+Start with idea 2: [`starter/conftest.py`](python/starter/conftest.py) is a single drop-in file of about 80 lines. The whole framework in this repo is 385 lines, not counting blank lines and comments.
 
 ## Layout
 

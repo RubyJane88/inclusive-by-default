@@ -24,6 +24,15 @@ export default class TeachingReporter implements Reporter {
     }
   }
 
+  // What tests print is still shown.
+  onStdOut(chunk: string | Buffer) {
+    console.log(String(chunk).trimEnd());
+  }
+
+  onStdErr(chunk: string | Buffer) {
+    console.error(String(chunk).trimEnd());
+  }
+
   onEnd() {
     for (const { title, message } of this.failures) {
       console.log(`___ ${title} ___\n${message}`);

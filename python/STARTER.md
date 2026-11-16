@@ -16,7 +16,7 @@ The examples use Python, pytest and Playwright. The ideas work in any stack. For
 
 ## 1. Start in 15 minutes
 
-One file. axe runs after every test that uses Playwright's `page`, and the test fails if axe finds WCAG A or AA problems.
+One file. axe runs after every test that passes, on every page the test left open, and the test fails if axe finds WCAG A or AA problems.
 
 1. Install, if you have not already:
    ```
@@ -31,7 +31,7 @@ What you will see on a page with problems (real output from the demo app):
 
 ```
 Expected: no WCAG A or AA failures that axe can detect
-Found:    6 rules fail:
+Found:    6 rules fail on http://localhost:8000/broken/
   button-name      1 x  Buttons must have discernible text
   color-contrast   6 x  Elements must meet minimum color contrast ratio thresholds
   document-title   1 x  Documents must have <title> element to aid in navigation
@@ -53,7 +53,21 @@ A blank reason stops the whole run.
 
 **If it fails on day one with many violations:** that is normal. Start the check on one test file, fix or ticket what it finds, then widen it.
 
-**If your site has a strict Content Security Policy,** the injected script may be blocked. Create the browser context with `bypass_csp=True` in tests.
+**What it handles**, each covered by a test in [`tests/meta/test_starter_meta.py`](tests/meta/test_starter_meta.py):
+
+- Every tab the test left open is checked, not only `page`.
+- Content inside iframes is checked, including iframes from another origin.
+- A strict Content Security Policy does not block it.
+- A page the test closed, or never loaded anything into, is skipped. So is a test with no browser.
+- If the test itself failed, axe does not run, so one problem is not reported twice.
+
+**What it does not do:**
+
+- It checks each page as the test left it. A dialog the test opened and closed again is not checked. End a test in the state you want checked.
+- It uses pytest-playwright's sync fixtures. With the async fixtures it fails with a message that says so.
+- Pages opened in a browser context the test created itself (`browser.new_context()`) are not checked.
+
+It needs pluggy 1.2 or newer, which current pytest-playwright already requires. It was run with pytest 7.0 to 9.1.
 
 ## 2. Templates to copy
 

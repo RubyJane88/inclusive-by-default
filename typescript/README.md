@@ -7,6 +7,9 @@ their failure messages are the same, word for word.
 **Only want the 15-minute start?** Copy
 [`starter/a11y-test.ts`](starter/a11y-test.ts). Its header says how to
 use it. It needs `@axe-core/playwright` and nothing else from this repo.
+It checks every tab a test leaves open, including content in iframes, and
+leaves tests that never open a page alone. `tests-starter/` is a stand-in
+suite that proves each case.
 
 ## How to run it
 

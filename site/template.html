@@ -330,7 +330,7 @@ dialog.showModal()</code></pre>
 
     <article class="step">
       <h3><span class="sn">1</span> Start in 15 minutes: axe after every test</h3>
-      <p>One file. axe runs after every test that uses Playwright’s <code>page</code>, and the test fails if axe finds WCAG A or AA problems.</p>
+      <p>One file. axe runs after every test that passes, on every page the test left open, and the test fails if axe finds WCAG A or AA problems. It looks inside iframes, works under a strict Content Security Policy, and leaves tests without a browser alone.</p>
       <ol>
         <li>Install, if you have not already: <code>pip install pytest-playwright</code>, then <code>playwright install chromium</code>.</li>
         <li>Copy the file below into your tests folder as <code>conftest.py</code>, or <a href="vendor/conftest.py" download="conftest.py">download conftest.py</a>.</li>
