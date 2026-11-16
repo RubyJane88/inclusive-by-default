@@ -14,27 +14,29 @@ import { A11yPage } from './a11y-page';
 import { runAxe, violationsReport } from './axe';
 import { fail } from './messages';
 
-type Fixtures = { app: A11yPage; axeAfterEveryTest: void };
-
-export const test = base.extend<Fixtures>({
+export const test = base.extend<{ app: A11yPage }>({
   app: async ({ page }, use) => {
     await use(new A11yPage(page));
   },
 
-  axeAfterEveryTest: [async ({ page }, use, testInfo) => {
+  // Wraps Playwright's own `context`, which `page` is built on. So the
+  // check runs only in tests that open a page, and sees every tab.
+  context: async ({ context }, use, testInfo) => {
     const skip = testInfo.annotations.find((a) => a.type === 'skip_axe');
     if (skip && !skip.description?.trim()) {
       fail(`${testInfo.title}: skip_axe needs a reason, e.g. `
         + "annotation: { type: 'skip_axe', description: '...' }");
     }
-    await use();
+    await use(context);
     // Runs after the test body. If the body failed, axe is
     // skipped, so one problem is not reported twice.
     if (skip || testInfo.status !== 'passed') return;
-    if (page.url() === 'about:blank') return;
-    const results = await runAxe(page);
-    if (results.violations.length) fail(violationsReport(results));
-  }, { auto: true }],
+    for (const page of context.pages()) {
+      if (page.isClosed() || page.url() === 'about:blank') continue;
+      const results = await runAxe(page);
+      if (results.violations.length) fail(violationsReport(results));
+    }
+  },
 });
 
 export { expect };
