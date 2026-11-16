@@ -11,42 +11,42 @@
     "demo1-before": {
       "command": "pytest tests/conventional --variant broken",
       "result": "pass",
-      "output": "..                                                                       [100%]\n2 passed in 2.48s"
+      "output": "..                                                                       [100%]\n2 passed in 1.81s"
     },
     "demo1-catch": {
       "command": "pytest tests/a11y/test_signup.py --variant broken",
       "result": "fail",
-      "output": "FFFF                                                                     [100%]\n=================================== FAILURES ===================================\n____________________ test_email_field_is_labelled[chromium] ____________________\nExpected: a textbox named \"Email\"\nFound:    2 textboxes, none named\n          The text \"Email\" is on the page but does not name any textbox\nFix:      Connect the visible text with <label for=\"...\">Email</label>\n____________________ test_name_field_is_labelled[chromium] _____________________\nExpected: a textbox named \"Name\"\nFound:    2 textboxes, none named\n          The text \"Name\" is on the page but does not name any textbox\nFix:      Connect the visible text with <label for=\"...\">Name</label>\n___________________ test_submit_is_a_named_button[chromium] ____________________\nExpected: a button named \"Create account\"\nFound:    2 buttons: \"Delete account\", 1 unnamed\n          The text \"Create account\" is on the page but does not name any button\nFix:      Use a real <button>Create account</button>\n_______________________ test_page_loads_clean[chromium] ________________________\nExpected: no WCAG A or AA failures that axe can detect\nFound:    6 rules fail (rule, where, fix):\n  button-name     #settings                  give the button text, or aria-label\n  color-contrast  .brand +5                  darken the text to at least 4.5:1 (now 2.81:1)\n  document-title  html                       add a <title> that names the page\n  html-has-lang   html                       add lang=\"en\" to <html>\n  image-alt       img                        add alt text that describes the image\n  label           #email +1                  connect text with <label for=\"...\">\nFix:      fix each rule above. Rule details: dequeuniversity.com/rules/axe/4.14\n4 failed in 5.36s"
+      "output": "FFFF                                                                     [100%]\n=================================== FAILURES ===================================\n____________________ test_email_field_is_labelled[chromium] ____________________\nExpected: a textbox named \"Email\"\nFound:    2 textboxes, none named\n          The text \"Email\" is on the page but does not name any textbox\nFix:      Connect the visible text with <label for=\"...\">Email</label>\n____________________ test_name_field_is_labelled[chromium] _____________________\nExpected: a textbox named \"Name\"\nFound:    2 textboxes, none named\n          The text \"Name\" is on the page but does not name any textbox\nFix:      Connect the visible text with <label for=\"...\">Name</label>\n___________________ test_submit_is_a_named_button[chromium] ____________________\nExpected: a button named \"Create account\"\nFound:    2 buttons: \"Delete account\", 1 unnamed\n          The text \"Create account\" is on the page but does not name any button\nFix:      Use a real <button>Create account</button>\n_______________________ test_page_loads_clean[chromium] ________________________\nExpected: no WCAG A or AA failures that axe can detect\nFound:    6 rules fail (rule, where, fix):\n  button-name     #settings                  give the button text, or aria-label\n  color-contrast  .brand +5                  darken the text to at least 4.5:1 (now 2.81:1)\n  document-title  html                       add a <title> that names the page\n  html-has-lang   html                       add lang=\"en\" to <html>\n  image-alt       img                        add alt text that describes the image\n  label           #email +1                  connect text with <label for=\"...\">\nFix:      fix each rule above. Rule details: dequeuniversity.com/rules/axe/4.14\n4 failed in 5.19s"
     },
     "demo1-after": {
       "command": "pytest tests/a11y/test_signup.py --variant fixed",
       "result": "pass",
-      "output": "....                                                                     [100%]\n4 passed in 2.95s"
+      "output": "....                                                                     [100%]\n4 passed in 2.66s"
     },
     "demo2-broken": {
       "command": "pytest tests/a11y/test_dialog.py --variant broken --show-keys",
       "result": "fail",
-      "output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n___________________ test_delete_dialog_keeps_focus[chromium] ___________________\nExpected: step 2 of 5: focus moves into the dialog\nFound:    focus is on button \"Delete account\", outside the dialog\nFix:      use <dialog> and open it with showModal()\n1 failed in 1.52s"
+      "output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n___________________ test_delete_dialog_keeps_focus[chromium] ___________________\nExpected: step 2 of 5: focus moves into the dialog\nFound:    focus is on button \"Delete account\", outside the dialog\nFix:      use <dialog> and open it with showModal()\n1 failed in 1.49s"
     },
     "demo2-fixed": {
       "command": "pytest tests/a11y/test_dialog.py --variant fixed --show-keys",
       "result": "pass",
-      "output": ".                                                                        [100%]\n1 passed in 1.47s"
+      "output": ".                                                                        [100%]\n1 passed in 1.53s"
     },
     "demo3-axe": {
       "command": "pytest tests/axe_only --variant hollow",
       "result": "pass",
-      "output": "..                                                                       [100%]\n2 passed in 1.90s"
+      "output": "..                                                                       [100%]\n2 passed in 1.80s"
     },
     "demo3-names": {
       "command": "pytest tests/a11y/test_names.py --variant hollow",
       "result": "fail",
-      "output": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n_________________ test_buttons_have_meaningful_names[chromium] _________________\nExpected: every button has a name that says what it is\nFound:    3 buttons with weak names:\n            \"icon\"                   in header  generic word\n            \"Create account button\"  in main    repeats the role\n            \"button\"                 in dialog  generic word\nFix:      name each button by its action alone — \"Settings\", not \"Settings button\"\n_________________ test_images_have_meaningful_names[chromium] __________________\nExpected: every image has a name that says what it is\nFound:    1 image with a weak name:\n            \"image\"                  in main    generic word\nFix:      describe what each image shows, e.g. alt=\"Project dashboard\"\n2 failed in 2.00s"
+      "output": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n_________________ test_buttons_have_meaningful_names[chromium] _________________\nExpected: every button has a name that says what it is\nFound:    3 buttons with weak names:\n            \"icon\"                   in header  generic word\n            \"Create account button\"  in main    repeats the role\n            \"button\"                 in dialog  generic word\nFix:      name each button by its action alone — \"Settings\", not \"Settings button\"\n_________________ test_images_have_meaningful_names[chromium] __________________\nExpected: every image has a name that says what it is\nFound:    1 image with a weak name:\n            \"image\"                  in main    generic word\nFix:      describe what each image shows, e.g. alt=\"Project dashboard\"\n2 failed in 1.84s"
     },
     "demo3-after": {
       "command": "pytest tests/a11y/test_names.py --variant fixed",
       "result": "pass",
-      "output": "..                                                                       [100%]\n2 passed in 2.10s"
+      "output": "..                                                                       [100%]\n2 passed in 2.02s"
     },
     "snapshot": {
       "command": "python scripts/show_snapshot.py",
