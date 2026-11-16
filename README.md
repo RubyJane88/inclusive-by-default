@@ -21,6 +21,10 @@ The app passes automated checks. It is a demo, not a claim of WCAG conformance.
 
 Both use the same three pages in `app/`.
 
+## The demo site
+
+The three demos are also a small website: try each page by keyboard, run axe in your browser, read the real test output, and copy the starter code. It is built from this repo by [`site/`](site/) and published with Netlify.
+
 ## How to run the demo
 
 ```
@@ -69,6 +73,7 @@ python/           the reference implementation
   tests/meta/          tests of the framework itself
   scripts/        check, snapshot, incomplete
 typescript/       port of the same patterns (in progress)
+site/             the demo website, built from this repo
 FINDINGS.md       what axe and Chromium actually do
 ```
 

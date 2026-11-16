@@ -10,7 +10,8 @@ SHOWN := $(if $(SHOW),$(HEADED),)
 
 .PHONY: setup serve demo1-before demo1-catch demo1-after \
 	demo2-broken demo2-fixed demo3-axe demo3-names \
-	demo3-after snapshot incomplete meta check lint
+	demo3-after snapshot incomplete meta check lint \
+	site-capture site site-serve
 
 setup:
 	python3 -m venv .venv
@@ -65,3 +66,14 @@ check:
 
 lint:
 	.venv/bin/ruff check framework tests conftest.py scripts starter
+
+# Demo site (see ../site/). site-capture records real test
+# output; site builds ../_site; site-serve previews it.
+site-capture:
+	$(PY) ../site/capture.py
+
+site:
+	python3 ../site/build.py
+
+site-serve: site
+	python3 -m http.server 8080 --bind 127.0.0.1 -d ../_site

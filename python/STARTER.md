@@ -38,7 +38,7 @@ Found:    6 rules fail:
   html-has-lang    1 x  <html> element must have a lang attribute
   image-alt        1 x  Images must have alternative text
   label            2 x  Form elements must have labels
-Fix:      fix each rule above; details at dequeuniversity.com/rules/axe/
+Fix:      fix each rule above. Rule details: dequeuniversity.com/rules/axe/4.14
 ```
 
 To skip the check for one test, you must say why:

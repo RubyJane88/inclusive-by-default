@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inclusive by Default: the demo</title>
+<meta name="description" content="One sign-up page in three versions, and the tests that tell them apart. Try the pages by keyboard, run axe in your browser, and copy the code.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">Demo from the talk</p>
+    <h1>Inclusive by Default</h1>
+    <p class="sub">Designing accessible test automation from day one. One sign-up page in three versions, and the tests that tell them apart.</p>
+    <ul class="versions">
+      <li><b>broken</b> looks fine, and cannot be used by keyboard or screen reader.</li>
+      <li><b>fixed</b> is the same page, done properly.</li>
+      <li><b>hollow</b> gives every control a name, and the names say nothing.</li>
+    </ul>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <nav class="plain-nav" aria-label="Sections">
+    <a href="#green-tests">1. Green tests, broken page</a>
+    <a href="#scanners">2. What scanners cannot see</a>
+    <a href="#names">3. Names that mean nothing</a>
+    <a href="#take-home">Take it home</a>
+  </nav>
+
+  <div class="tabs" role="tablist" aria-label="Demos" hidden>
+    <button type="button" role="tab" id="tab-green-tests" aria-controls="green-tests" data-panel="green-tests"><span class="tn">1</span> Green tests, broken page</button>
+    <button type="button" role="tab" id="tab-scanners" aria-controls="scanners" data-panel="scanners"><span class="tn">2</span> What scanners cannot see</button>
+    <button type="button" role="tab" id="tab-names" aria-controls="names" data-panel="names"><span class="tn">3</span> Names that mean nothing</button>
+    <button type="button" role="tab" id="tab-take-home" aria-controls="take-home" data-panel="take-home">Take it home</button>
+  </div>
+
+  <!-- ================= DEMO 1 ================= -->
+  <section class="panel" id="green-tests" aria-labelledby="h-green-tests" tabindex="-1">
+    <h2 id="h-green-tests">Green tests, broken page</h2>
+    <p class="lead">The usual tests pass on a page that a keyboard or screen reader user cannot use. Tests that find controls by role and name fail on it, and say how to fix it.</p>
+
+    <div class="try" data-demo="green">
+      <h3>Try the page yourself</h3>
+      <fieldset class="switch">
+        <legend>Version</legend>
+        <label><input type="radio" name="v-green" value="broken" checked> Broken</label>
+        <label><input type="radio" name="v-green" value="fixed"> Fixed</label>
+      </fieldset>
+      <div class="frame">
+        <div class="frame-bar">
+          <span class="frame-name" data-frame-name>Broken version: inaccessible on purpose</span>
+          <button type="button" data-reload>Reload page</button>
+          <a data-open href="app/broken/" target="_blank" rel="noopener">Open in its own tab</a>
+        </div>
+        <iframe src="app/broken/" title="Sign-up page, broken version" loading="lazy"></iframe>
+      </div>
+      <div class="expect" data-show="broken">
+        <p><b>With a keyboard:</b> press Tab to move through the page. Focus goes from the settings icon to the two fields, then jumps past Create account to Delete account. You cannot create an account without a mouse.</p>
+        <p><b>With a screen reader:</b> the settings icon is announced as “button” and the fields as plain text fields, with no names.</p>
+      </div>
+      <div class="expect" data-show="fixed" hidden>
+        <p><b>With a keyboard:</b> Tab reaches every control, including Create account, and Enter submits the form.</p>
+        <p><b>With a screen reader:</b> every control says what it is, such as “Settings, button” and “Email, edit text”.</p>
+      </div>
+      <div class="axe">
+        <button type="button" class="primary" data-scan="page">Run axe on this page</button>
+        <span class="hint">Runs axe-core {{meta:axe}} in your browser, with the WCAG A and AA rules.</span>
+        <div class="axe-out" role="status" data-axe-out></div>
+      </div>
+    </div>
+
+    <h3>What the tests said</h3>
+    <div class="cols">
+      <figure class="out">
+        <figcaption><span class="badge pass">PASS</span> Usual tests, broken page <code>make demo1-before</code></figcaption>
+        <pre tabindex="0"><code>{{out:demo1-before}}</code></pre>
+      </figure>
+      <figure class="out">
+        <figcaption><span class="badge pass">PASS</span> Role-based tests, fixed page <code>make demo1-after</code></figcaption>
+        <pre tabindex="0"><code>{{out:demo1-after}}</code></pre>
+      </figure>
+    </div>
+    <figure class="out">
+      <figcaption><span class="badge fail">FAIL</span> Role-based tests, broken page <code>make demo1-catch</code></figcaption>
+      <pre tabindex="0"><code>{{out:demo1-catch}}</code></pre>
+    </figure>
+    <p>Every failure reads the same way: what the test needed, what is on the page, and one change that fixes it. Someone new to accessibility can act on it, and so can an AI assistant.</p>
+
+    <details>
+      <summary>The two kinds of test</summary>
+      <div class="cols">
+        <figure class="out">
+          <figcaption>Usual: finds elements by CSS selector</figcaption>
+          <pre tabindex="0"><code>{{file:python/tests/conventional/test_signup_conventional.py}}</code></pre>
+        </figure>
+        <figure class="out">
+          <figcaption>Role-based: finds them the way a screen reader does</figcaption>
+          <pre tabindex="0"><code>{{file:python/tests/a11y/test_signup.py}}</code></pre>
+        </figure>
+      </div>
+    </details>
+
+    <h3>The fix is small</h3>
+    <div class="cols">
+      <figure class="out">
+        <figcaption>Before</figcaption>
+        <pre tabindex="0"><code>&lt;div&gt;Email&lt;/div&gt;
+&lt;input id="email"&gt;
+
+&lt;div class="btn"&gt;Create account&lt;/div&gt;</code></pre>
+      </figure>
+      <figure class="out">
+        <figcaption>After</figcaption>
+        <pre tabindex="0"><code>&lt;label for="email"&gt;Email&lt;/label&gt;
+&lt;input id="email"&gt;
+
+&lt;button type="submit"&gt;Create account&lt;/button&gt;</code></pre>
+      </figure>
+    </div>
+    <p class="small">Simplified from <code>app/broken</code> and <code>app/fixed</code>. The page looks the same before and after.</p>
+
+    <h3>What a screen reader gets</h3>
+    <p>The browser turns the page into a tree of roles and names. Screen readers read it, and so do AI agents that use Playwright MCP. Unnamed controls on the broken page have no name here either.</p>
+    <figure class="out">
+      <figcaption>Accessibility tree, broken then fixed <code>make snapshot</code></figcaption>
+      <pre tabindex="0"><code>{{out:snapshot}}</code></pre>
+    </figure>
+  </section>
+
+  <!-- ================= DEMO 2 ================= -->
+  <section class="panel" id="scanners" aria-labelledby="h-scanners" tabindex="-1">
+    <h2 id="h-scanners">What scanners cannot see</h2>
+    <p class="lead">The broken dialog has correct ARIA: a dialog role, marked modal, with a name. A scanner reads markup and cannot press keys, so it has nothing to say about what happens when you do.</p>
+
+    <div class="try" data-demo="dialog">
+      <h3>Try the dialog by keyboard</h3>
+      <fieldset class="switch">
+        <legend>Version</legend>
+        <label><input type="radio" name="v-dialog" value="broken" checked> Broken</label>
+        <label><input type="radio" name="v-dialog" value="fixed"> Fixed</label>
+      </fieldset>
+      <div class="frame">
+        <div class="frame-bar">
+          <span class="frame-name" data-frame-name>Broken version: inaccessible on purpose</span>
+          <button type="button" data-reload>Reload page</button>
+          <a data-open href="app/broken/" target="_blank" rel="noopener">Open in its own tab</a>
+        </div>
+        <iframe src="app/broken/" title="Sign-up page, broken version" loading="lazy"></iframe>
+      </div>
+      <div class="expect" data-show="broken">
+        <p><b>Steps:</b> Tab to Delete account and press Enter. The dialog opens. Now press Tab a few times, then Escape.</p>
+        <p><b>What happens:</b> focus stays on the page behind the dialog and moves through controls you can no longer see properly. Escape does nothing. If you get lost, use Reload page above.</p>
+      </div>
+      <div class="expect" data-show="fixed" hidden>
+        <p><b>Steps:</b> Tab to Delete account and press Enter. Press Tab a few times, then Escape.</p>
+        <p><b>What happens:</b> focus moves into the dialog and stays there. Escape closes it, and focus returns to Delete account.</p>
+      </div>
+      <div class="axe">
+        <button type="button" class="primary" data-scan="dialog">Run axe on the open dialog</button>
+        <span class="hint">Opens the dialog, scans it with axe-core {{meta:axe}}, and closes it again.</span>
+        <div class="axe-out" role="status" data-axe-out></div>
+        <p class="small">axe has no rule that presses keys. Whatever it lists, none of it is about where focus goes.</p>
+      </div>
+    </div>
+
+    <h3>A test that presses the keys</h3>
+    <div class="cols">
+      <figure class="out">
+        <figcaption><span class="badge fail">FAIL</span> Broken dialog <code>make demo2-broken</code></figcaption>
+        <pre tabindex="0"><code>{{out:demo2-broken}}</code></pre>
+      </figure>
+      <figure class="out">
+        <figcaption><span class="badge pass">PASS</span> Fixed dialog <code>make demo2-fixed</code></figcaption>
+        <pre tabindex="0"><code>{{out:demo2-fixed}}</code></pre>
+      </figure>
+    </div>
+
+    <h3>The focus contract, in five steps</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="The five steps of the focus contract">
+      <table>
+        <thead><tr><th scope="col">Step</th><th scope="col">The test checks</th><th scope="col">If it fails, the Fix line says</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>The dialog opens</td><td>use &lt;dialog&gt; with a heading that names it</td></tr>
+          <tr><td>2</td><td>Focus moves into the dialog</td><td>use &lt;dialog&gt; and open it with showModal()</td></tr>
+          <tr><td>3</td><td>Tab and Shift+Tab stay inside</td><td>showModal() makes the page behind inert</td></tr>
+          <tr><td>4</td><td>Escape closes the dialog</td><td>use &lt;dialog&gt;: Escape closes it natively</td></tr>
+          <tr><td>5</td><td>Focus returns to the button that opened it</td><td>use &lt;dialog&gt;: closing it restores focus</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Focus may step out to the browser’s own controls, as Chromium does once per cycle. It must never reach the page behind the dialog. The test checks the keyboard path written in it, not every path.</p>
+
+    <details>
+      <summary>The test</summary>
+      <figure class="out">
+        <figcaption><code>python/tests/a11y/test_dialog.py</code></figcaption>
+        <pre tabindex="0"><code>{{file:python/tests/a11y/test_dialog.py}}</code></pre>
+      </figure>
+    </details>
+
+    <h3>The fix: let the browser do it</h3>
+    <div class="cols">
+      <figure class="out">
+        <figcaption>Before</figcaption>
+        <pre tabindex="0"><code>&lt;div role="dialog" aria-modal="true" ...&gt;
+
+layer.classList.add("open")</code></pre>
+      </figure>
+      <figure class="out">
+        <figcaption>After</figcaption>
+        <pre tabindex="0"><code>&lt;dialog aria-labelledby="confirm-title"&gt;
+
+dialog.showModal()</code></pre>
+      </figure>
+    </div>
+    <p class="small">Simplified from <code>app/broken</code> and <code>app/fixed</code>. Less code, not more.</p>
+
+    <h3>One more limit: contrast over a gradient</h3>
+    <p>The promo banner has text over a gradient. axe cannot work out its contrast, so it reports it as “incomplete”: not a pass, not a failure. A person has to look.</p>
+    <figure class="out">
+      <figcaption>axe on the banner <code>make incomplete</code></figcaption>
+      <pre tabindex="0"><code>{{out:incomplete}}</code></pre>
+    </figure>
+  </section>
+
+  <!-- ================= DEMO 3 ================= -->
+  <section class="panel" id="names" aria-labelledby="h-names" tabindex="-1">
+    <h2 id="h-names">Names that mean nothing</h2>
+    <p class="lead">The hollow page looks exactly like the fixed page. Every control has a name, so a scanner is satisfied. The names are “icon”, “image” and “button”.</p>
+
+    <div class="try" data-demo="names">
+      <h3>Can you see the difference?</h3>
+      <fieldset class="switch">
+        <legend>Version</legend>
+        <label><input type="radio" name="v-names" value="hollow" checked> Hollow</label>
+        <label><input type="radio" name="v-names" value="fixed"> Fixed</label>
+      </fieldset>
+      <div class="frame">
+        <div class="frame-bar">
+          <span class="frame-name" data-frame-name>Hollow version: names that say nothing</span>
+          <button type="button" data-reload>Reload page</button>
+          <a data-open href="app/hollow/" target="_blank" rel="noopener">Open in its own tab</a>
+        </div>
+        <iframe src="app/hollow/" title="Sign-up page, hollow version" loading="lazy"></iframe>
+      </div>
+      <div class="expect" data-show="hollow">
+        <p><b>By eye:</b> nothing is wrong. Switch to Fixed and back: the two look identical.</p>
+        <p><b>With a screen reader:</b> the settings icon is “icon, button”, the picture is “image, image”, and the submit button is “Create account button, button”.</p>
+      </div>
+      <div class="expect" data-show="fixed" hidden>
+        <p><b>By eye:</b> the same page.</p>
+        <p><b>With a screen reader:</b> “Settings, button”, “Northwind dashboard showing a project summary, image”, “Create account, button”.</p>
+      </div>
+      <div class="axe">
+        <button type="button" class="primary" data-scan="page">Run axe on this page</button>
+        <span class="hint">Runs axe-core {{meta:axe}} in your browser, with the WCAG A and AA rules.</span>
+        <div class="axe-out" role="status" data-axe-out></div>
+      </div>
+    </div>
+
+    <h3>Two checks, two answers</h3>
+    <div class="cols">
+      <figure class="out">
+        <figcaption><span class="badge pass">PASS</span> axe alone, hollow page <code>make demo3-axe</code></figcaption>
+        <pre tabindex="0"><code>{{out:demo3-axe}}</code></pre>
+      </figure>
+      <figure class="out">
+        <figcaption><span class="badge pass">PASS</span> Name check, fixed page <code>make demo3-after</code></figcaption>
+        <pre tabindex="0"><code>{{out:demo3-after}}</code></pre>
+      </figure>
+    </div>
+    <figure class="out">
+      <figcaption><span class="badge fail">FAIL</span> Name check, hollow page <code>make demo3-names</code></figcaption>
+      <pre tabindex="0"><code>{{out:demo3-names}}</code></pre>
+    </figure>
+    <p>axe checks that a name exists. The name check asks whether it says anything.</p>
+
+    <h3>What the name check rejects</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Rules of the name check">
+      <table>
+        <thead><tr><th scope="col">Rule</th><th scope="col">Example that fails</th></tr></thead>
+        <tbody>
+          <tr><td>No name at all</td><td>(empty)</td></tr>
+          <tr><td>A generic word</td><td>“icon”, “image”, “click here”</td></tr>
+          <tr><td>A name that repeats the role</td><td>“Submit button”</td></tr>
+          <tr><td>A file name or id</td><td>“img_001.png”</td></tr>
+          <tr><td>Visible text missing from the name</td><td>“Save” on a button that shows “Save draft”</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>It rejects known-bad names. It cannot tell whether a plausible name is right: “Settings” on a delete button passes. People still review names.</p>
+
+    <h3>The fix: say what it is</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Names before and after the fix">
+      <table>
+        <thead><tr><th scope="col">Before</th><th scope="col">After</th></tr></thead>
+        <tbody>
+          <tr><td><code>aria-label="icon"</code></td><td><code>aria-label="Settings"</code></td></tr>
+          <tr><td><code>aria-label="Create account button"</code></td><td>No aria-label: the visible text is the name</td></tr>
+          <tr><td><code>aria-label="button"</code></td><td><code>aria-label="Close dialog"</code></td></tr>
+          <tr><td><code>alt="image"</code></td><td><code>alt="Northwind dashboard showing a project summary"</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>The tests</summary>
+      <div class="cols">
+        <figure class="out">
+          <figcaption>axe alone</figcaption>
+          <pre tabindex="0"><code>{{file:python/tests/axe_only/test_axe_only.py}}</code></pre>
+        </figure>
+        <figure class="out">
+          <figcaption>The name check</figcaption>
+          <pre tabindex="0"><code>{{file:python/tests/a11y/test_names.py}}</code></pre>
+        </figure>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= TAKE HOME ================= -->
+  <section class="panel" id="take-home" aria-labelledby="h-take-home" tabindex="-1">
+    <h2 id="h-take-home">Take it home</h2>
+    <p class="lead">You do not need a new tool. You need the tools you already have to run on every test, and to say what to fix. Copy these in order. The examples use Python, pytest and Playwright; the ideas work in any stack.</p>
+
+    <article class="step">
+      <h3><span class="sn">1</span> Start in 15 minutes: axe after every test</h3>
+      <p>One file. axe runs after every test that uses Playwright’s <code>page</code>, and the test fails if axe finds WCAG A or AA problems.</p>
+      <ol>
+        <li>Install, if you have not already: <code>pip install pytest-playwright</code>, then <code>playwright install chromium</code>.</li>
+        <li>Copy the file below into your tests folder as <code>conftest.py</code>, or <a href="vendor/conftest.py" download="conftest.py">download conftest.py</a>.</li>
+        <li>Put <a href="vendor/axe.min.js" download="axe.min.js">axe.min.js</a> next to it (axe-core {{meta:axe}}, MPL-2.0).</li>
+        <li>Run your tests.</li>
+      </ol>
+      <figure class="out copyable">
+        <figcaption><code>conftest.py</code> <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{file:python/starter/conftest.py}}</code></pre>
+      </figure>
+      <p>To skip the check for one test, you must say why. A blank reason stops the whole run.</p>
+      <figure class="out copyable">
+        <figcaption>Opting out <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{starter:1. Start in 15 minutes|2}}</code></pre>
+      </figure>
+      <p class="small">If it fails on day one with many violations, that is normal. Start with one test file, fix or ticket what it finds, then widen it.</p>
+    </article>
+
+    <article class="step">
+      <h3><span class="sn">2</span> Find elements by role and name</h3>
+      <p>Tests that find elements the way assistive technology does fail when a control has no name. You get that check for free.</p>
+      <figure class="out copyable">
+        <figcaption>Role and name <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{starter:Find elements by role and name|0}}</code></pre>
+      </figure>
+      <p>To make it the default, wrap the page in an object that only offers role-based methods: <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/framework/a11y_page.py">a11y_page.py</a>. The missing methods are the point.</p>
+    </article>
+
+    <article class="step">
+      <h3><span class="sn">3</span> Make failures say the fix</h3>
+      <figure class="out copyable">
+        <figcaption>Expected, Found, Fix <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{starter:Failure messages that say the fix|0}}</code></pre>
+      </figure>
+      <p>More examples: <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/framework/messages.py">messages.py</a>.</p>
+    </article>
+
+    <article class="step">
+      <h3><span class="sn">4</span> Ban names that say nothing</h3>
+      <figure class="out copyable">
+        <figcaption>Generic names <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{starter:Banned names|0}}</code></pre>
+      </figure>
+      <p>Add your own words: internal codenames, “TODO”, placeholder text. The full rules are in <code>name_problem</code> in <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/framework/helpers.py">helpers.py</a>.</p>
+    </article>
+
+    <article class="step">
+      <h3><span class="sn">5</span> Add one behavior check for your riskiest component</h3>
+      <p>Write down what a keyboard user must be able to do, then test exactly that. For a dialog: it opens, focus moves in, focus stays in, Escape closes it, and focus returns. The working version is <code>assert_modal_focus_contract</code> in <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/framework/helpers.py">helpers.py</a>. Use the same idea for a date picker, a menu or tabs.</p>
+    </article>
+
+    <article class="step">
+      <h3><span class="sn">6</span> Use it with AI assistants</h3>
+      <p>AI assistants fix accessibility problems well once they are pointed out, and rarely raise them on their own. Your tests do the pointing. These are suggested starting points; they were not tested in the talk.</p>
+      <figure class="out copyable">
+        <figcaption>A prompt to paste with a failing test <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{starter:A prompt to paste with a failing test|0}}</code></pre>
+      </figure>
+      <figure class="out copyable">
+        <figcaption>A rules file, for example CLAUDE.md or AGENTS.md <button type="button" data-copy>Copy</button></figcaption>
+        <pre tabindex="0"><code>{{starter:A rules file for your assistant|0}}</code></pre>
+      </figure>
+      <p>A rules file asks. A test enforces. Use both.</p>
+    </article>
+
+    <article class="step">
+      <h3>Roll it out</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Roll-out plan">
+        <table>
+          <thead><tr><th scope="col">When</th><th scope="col">What</th></tr></thead>
+          <tbody>
+            <tr><td>Today, 15 minutes</td><td>Add the starter file to one test folder and run it.</td></tr>
+            <tr><td>This week</td><td>Switch one page object to find by role and name. Rewrite its failures as Expected, Found, Fix.</td></tr>
+            <tr><td>This quarter</td><td>Banned names on one critical flow. One behavior check for your riskiest component. Let your assistant fix what they find.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="step">
+      <h3>What automation will not catch</h3>
+      <p>These checks are a floor, not a ceiling. Passing them is not WCAG conformance. Once per release, for each key flow, take ten minutes:</p>
+      <ul>
+        <li><b>Keyboard only.</b> Can you reach and use everything? Can you always see where focus is?</li>
+        <li><b>Screen reader.</b> Tab through the flow. Does every control announce what it does?</li>
+        <li><b>Zoom to 200%.</b> Does anything overlap, get cut off, or need sideways scrolling?</li>
+      </ul>
+      <p>Nothing replaces testing with disabled people.</p>
+    </article>
+
+    <p>The full guide, with other test tools and sources: <a href="https://github.com/RubyJane88/inclusive-by-default/blob/main/python/STARTER.md">STARTER.md in the repo</a>. A TypeScript version is in progress.</p>
+  </section>
+</main>
+
+<footer class="bottom">
+  <div class="wrap">
+    <p><a href="https://github.com/RubyJane88/inclusive-by-default">Source on GitHub</a>: the three pages, the framework, the tests and the commands to run each demo.</p>
+    <p>The test output on this page is real. It was recorded on {{meta:captured}} by running each demo’s tests with pytest {{meta:pytest}}, Playwright for Python {{meta:playwright}}, Chromium {{meta:chromium}} and axe-core {{meta:axe}}. The “Run axe” buttons run axe-core live in your browser, so their results depend on your browser.</p>
+    <p>The fixed page passes automated checks. This is a demo, not a claim of WCAG conformance.</p>
+    <p>Code under the MIT licence. axe-core is by Deque Systems, under <a href="vendor/axe-LICENSE">MPL-2.0</a>.</p>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
