@@ -9,6 +9,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
+APP_DIR = ROOT.parent / "app"
 sys.path.insert(0, str(ROOT))
 
 from framework.axe import run_axe
@@ -16,7 +17,7 @@ from framework.axe import run_axe
 
 def main():
     variant = sys.argv[1] if len(sys.argv) > 1 else "fixed"
-    url = (ROOT / "app" / variant / "index.html").as_uri()
+    url = (APP_DIR / variant / "index.html").as_uri()
     with sync_playwright() as p:
         browser = p.chromium.launch(channel="chromium")
         page = browser.new_page()
