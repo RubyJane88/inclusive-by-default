@@ -12,6 +12,15 @@ Demo code for the talk "Inclusive by Default: Designing Accessible Test Automati
 
 The app passes automated checks. It is a demo, not a claim of WCAG conformance.
 
+## Choose your language
+
+| Folder | Status |
+|---|---|
+| [`python/`](python/) | Ready. pytest and Playwright for Python. The reference implementation, used in the talk. |
+| [`typescript/`](typescript/) | In progress. The same patterns for Playwright Test. |
+
+Both use the same three pages in `app/`.
+
 ## How to run the demo
 
 ```
@@ -84,4 +93,4 @@ Python 3.12, Playwright for Python 1.64.0 (Chromium 156), pytest 9.1.1, pytest-p
 
 ## Licence
 
-MIT, see [LICENSE](LICENSE). Copy what helps. `framework/vendor/axe.min.js` is axe-core by Deque Systems, under MPL-2.0 ([axe-LICENSE](framework/vendor/axe-LICENSE)).
+MIT, see [LICENSE](LICENSE). Copy what helps. `python/framework/vendor/axe.min.js` is axe-core by Deque Systems, under MPL-2.0 ([axe-LICENSE](python/framework/vendor/axe-LICENSE)).

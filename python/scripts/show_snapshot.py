@@ -8,11 +8,12 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
+APP_DIR = ROOT.parent / "app"
 REGIONS = ["header", "#signup"]
 
 
 def snapshot(page, variant):
-    url = (ROOT / "app" / variant / "index.html").as_uri()
+    url = (APP_DIR / variant / "index.html").as_uri()
     page.goto(url)
     lines = []
     for region in REGIONS:
