@@ -1,0 +1,12 @@
+# Netlify builds the demo site from this repo.
+# The build uses only Python's standard library.
+[build]
+  command = "python3 site/build.py"
+  publish = "_site"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
