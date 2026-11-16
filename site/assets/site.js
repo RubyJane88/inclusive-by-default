@@ -111,10 +111,34 @@
       var out = box.querySelector("[data-axe-out]");
       var scanBtn = box.querySelector("[data-scan]");
 
+      // The page in the frame is reloaded when the version
+      // changes. A scan waits for that to finish.
+      var loading = false;
+      frame.addEventListener("load", function () { loading = false; });
+      function whenLoaded() {
+        return new Promise(function (resolve, reject) {
+          var doc = frame.contentDocument;
+          var blank = !doc ||
+            frame.contentWindow.location.href === "about:blank";
+          if (!loading && !blank && doc.readyState === "complete") {
+            resolve();
+            return;
+          }
+          var timer = setTimeout(function () {
+            reject(new Error("the page did not finish loading"));
+          }, 15000);
+          frame.addEventListener("load", function () {
+            clearTimeout(timer);
+            resolve();
+          }, { once: true });
+        });
+      }
+
       function variant() {
         return box.querySelector(".switch input:checked").value;
       }
       function setVariant(v) {
+        loading = true;
         frame.src = "app/" + v + "/";
         frame.title = "Sign-up page, " + v + " version";
         nameEl.textContent = NAMES[v];
@@ -137,6 +161,7 @@
         "click",
         function () {
           out.textContent = "";
+          loading = true;
           frame.contentWindow.location.reload();
         }
       );
@@ -161,12 +186,15 @@
         return !!(dialog && dialog.open);
       }
       function runScan() {
-        var win = frame.contentWindow;
-        var doc = frame.contentDocument;
+        var win, doc;
         var scope = scanBtn.dataset.scan;
         var openedHere = false;
         var options = { runOnly: { type: "tag", values: WCAG_TAGS } };
-        return loadAxe(win, doc).then(function () {
+        return whenLoaded().then(function () {
+          win = frame.contentWindow;
+          doc = frame.contentDocument;
+          return loadAxe(win, doc);
+        }).then(function () {
           if (scope !== "dialog") return win.axe.run(doc, options);
           if (!dialogIsOpen(doc)) {
             doc.getElementById("delete").click();
