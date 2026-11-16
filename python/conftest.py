@@ -8,9 +8,9 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 
-APP_DIR = Path(__file__).parent / "app"
+APP_DIR = Path(__file__).parent.parent / "app"
 KEY_OVERLAY = (
-    Path(__file__).parent / "recording" / "key_overlay.js"
+    Path(__file__).parent.parent / "recording" / "key_overlay.js"
 )
 VARIANTS = ("broken", "fixed", "hollow")
 TIMEOUT_MS = 2000

@@ -72,6 +72,6 @@ def _report(violations):
         " detect\n"
         f"Found:    {len(rows)} rules fail:\n"
         + "\n".join(rows)
-        + "\nFix:      fix each rule above; details at"
+        + "\nFix:      fix each rule above. Rule details:"
         " dequeuniversity.com/rules/axe/"
     )

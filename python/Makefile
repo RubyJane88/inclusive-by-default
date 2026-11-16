@@ -20,7 +20,7 @@ setup:
 # Open http://localhost:8000/broken/ (or fixed, hollow)
 # in a browser, for example to try a screen reader.
 serve:
-	$(PY) -m http.server 8000 --bind 127.0.0.1 -d app
+	$(PY) -m http.server 8000 --bind 127.0.0.1 -d ../app
 
 # Demo 1: green tests, broken page
 demo1-before:

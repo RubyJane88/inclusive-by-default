@@ -1,6 +1,6 @@
 # Inclusive by Default
 
-**Came from the talk? Start here: [STARTER.md](STARTER.md).** It shows what to copy into your own test suite, in what order, starting with one file you can add in 15 minutes.
+**Came from the talk? Start here: [python/STARTER.md](python/STARTER.md).** It shows what to copy into your own test suite, in what order, starting with one file you can add in 15 minutes.
 
 ---
 
@@ -15,6 +15,7 @@ The app passes automated checks. It is a demo, not a claim of WCAG conformance.
 ## How to run the demo
 
 ```
+cd python
 make setup         # once, needs network: venv, packages, Chromium
 make demo1-catch   # accessibility tests fail on broken, with fixes
 make demo1-after   # the same tests pass on fixed
@@ -35,27 +36,30 @@ Extras: `make snapshot` (accessibility tree, broken next to fixed) and `make inc
 
 ## Four ideas to copy
 
-1. **Find elements by role and name.** `framework/a11y_page.py` has `button(name)`, `textbox(name)`, `dialog(name)` and no CSS access. A control with no name cannot be found, so the test fails.
-2. **Run axe after every test.** `tests/a11y/conftest.py` runs it without being asked. Skipping it takes `@pytest.mark.skip_axe(reason="...")`, and an empty reason stops the run.
-3. **Make failures say the fix.** Every failure reads Expected, Found, Fix (`framework/messages.py`). A developer new to accessibility can act on it, and so can an AI assistant.
-4. **Check what scanners miss.** `framework/helpers.py` has a name-quality check and a five-step dialog focus check.
+1. **Find elements by role and name.** `python/framework/a11y_page.py` has `button(name)`, `textbox(name)`, `dialog(name)` and no CSS access. A control with no name cannot be found, so the test fails.
+2. **Run axe after every test.** `python/tests/a11y/conftest.py` runs it without being asked. Skipping it takes `@pytest.mark.skip_axe(reason="...")`, and an empty reason stops the run.
+3. **Make failures say the fix.** Every failure reads Expected, Found, Fix (`python/framework/messages.py`). A developer new to accessibility can act on it, and so can an AI assistant.
+4. **Check what scanners miss.** `python/framework/helpers.py` has a name-quality check and a five-step dialog focus check.
 
-Start with idea 2: [`starter/conftest.py`](starter/conftest.py) is a single drop-in file of about 60 lines. The whole framework in this repo is 385 lines, not counting blank lines and comments.
+Start with idea 2: [`starter/conftest.py`](python/starter/conftest.py) is a single drop-in file of about 60 lines. The whole framework in this repo is 385 lines, not counting blank lines and comments.
 
 ## Layout
 
 ```
-STARTER.md        what to copy into your own suite
-starter/          drop-in conftest.py: axe after every test
-app/              broken, fixed, hollow, shared assets
-framework/        page object, helpers, messages, axe wrapper
-framework/vendor/ axe-core 4.14.0 (MPL-2.0, see axe-LICENSE)
-tests/conventional/  CSS selectors, no axe
-tests/axe_only/      axe alone, no framework helpers
-tests/a11y/          demo tests, axe after every test
-tests/meta/          tests of the framework itself
-scripts/          check, snapshot, incomplete
+app/              broken, fixed, hollow, shared assets — one source
+                  of truth for every language
 recording/        on-screen key display used with --show-keys
+python/           the reference implementation
+  STARTER.md      what to copy into your own suite
+  starter/        drop-in conftest.py: axe after every test
+  framework/      page object, helpers, messages, axe wrapper
+  framework/vendor/ axe-core 4.14.0 (MPL-2.0, see axe-LICENSE)
+  tests/conventional/  CSS selectors, no axe
+  tests/axe_only/      axe alone, no framework helpers
+  tests/a11y/          demo tests, axe after every test
+  tests/meta/          tests of the framework itself
+  scripts/        check, snapshot, incomplete
+typescript/       port of the same patterns (in progress)
 FINDINGS.md       what axe and Chromium actually do
 ```
 
