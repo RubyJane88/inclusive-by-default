@@ -11,6 +11,41 @@
   };
   document.documentElement.classList.add("js");
 
+  /* ---------- Code blocks ----------
+     A block is a keyboard stop only when it scrolls sideways.
+     Then it gets a name, taken from its caption. */
+  function captionText(pre) {
+    var caption = pre.parentNode.querySelector("figcaption");
+    if (!caption) return "Code";
+    var copy = caption.cloneNode(true);
+    Array.prototype.forEach.call(
+      copy.querySelectorAll("button, [role=status]"),
+      function (el) { el.remove(); }
+    );
+    return copy.textContent.replace(/\s+/g, " ").trim();
+  }
+  function markScrollable() {
+    Array.prototype.forEach.call(
+      document.querySelectorAll("pre"),
+      function (pre) {
+        if (pre.scrollWidth > pre.clientWidth) {
+          pre.tabIndex = 0;
+          pre.setAttribute("role", "group");
+          pre.setAttribute("aria-label", captionText(pre));
+        } else {
+          pre.removeAttribute("tabindex");
+          pre.removeAttribute("role");
+          pre.removeAttribute("aria-label");
+        }
+      }
+    );
+  }
+  window.addEventListener("resize", markScrollable);
+  Array.prototype.forEach.call(
+    document.querySelectorAll("details"),
+    function (d) { d.addEventListener("toggle", markScrollable); }
+  );
+
   /* ---------- Tabs ---------- */
   var tablist = document.querySelector("[role=tablist]");
   var tabs = Array.prototype.slice.call(
@@ -31,6 +66,7 @@
       tab.tabIndex = on ? 0 : -1;
       panels[i].hidden = !on;
     });
+    markScrollable();
     if (opts && opts.focus) tabs[index].focus();
     if (opts && opts.hash) {
       history.replaceState(null, "", "#" + panels[index].id);
